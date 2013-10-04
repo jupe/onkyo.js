@@ -6,6 +6,6 @@ onkyo.Discover( function(err, device){
 	onkyo.Connect( function(){
 		console.log('client connected');
 	 	//onkyo.On();
-	 	onkyo.SendCommand("SOURCE_SELECT", "FM")
+	 	onkyo.SendCommand("SOURCE_SELECT", "FM");
 	});
 });
