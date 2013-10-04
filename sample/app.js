@@ -1,8 +1,11 @@
 var Onkyo = require('../lib/Onkyo');
 
-var onkyo = new Onkoy();
+var onkyo = new Onkyo();
 onkyo.Discover( function(err, device){
 	console.log(device);
-	onkyo.Connect();
-	setTimeout( onkyo.Off, 1000);
+	onkyo.Connect( function(){
+		console.log('client connected');
+	 	//onkyo.On();
+	 	onkyo.SendCommand("SOURCE_SELECT", "FM")
+	});
 });
