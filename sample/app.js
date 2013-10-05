@@ -12,8 +12,10 @@ onkyo.on("connected", function(host){
 });
 onkyo.Discover( function(err, device){
 	onkyo.Connect( function(){
-	 	onkyo.PwrOff();
+	 	onkyo.PwrOn();
 	 	//onkyo.SendCommand("SOURCE_SELECT", "FM");
-	 	onkyo.Close();
+	 	onkyo.VolUp();
+	 	
 	});
 });
+setTimeout( onkyo.Close, 10000);
