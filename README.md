@@ -3,7 +3,7 @@ onkyo.js
 
 Onkyo Receiver controller module.
 
-Library is heavily work in progress, but discovering already works and event receiving.
+Basic features already works, but currently only very limited remote-functions are implemented. Implementation state is more like proof-of-concept.
 
 Tested with TX-NR809
 
@@ -24,6 +24,6 @@ onkyo.Discover( function(err, device){
   onkyo.UnMute();     //volume 4
   onkyo.SendCommand('AUDIO', 'Volume Up'); 
   onkyo.SendCommand("SOURCE_SELECT", "FM");
-	setTimeout( onkyo.Off, 1000);
+	setTimeout( onkyo.PwrOff, 10000);
 })
 ```
