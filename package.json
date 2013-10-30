@@ -5,6 +5,7 @@
   "version": "0.1.1",
   "homepage": "https://github.com/jupe/onkyo.js",
   "author": "Jussi Vatjus-Anttila <jussiva@gmail.com>)",
+  "main": "lib/onkyo",
   "bugs" : {
     "url" : "https://github.com/jupe/onkyo.js/issues"
   },
