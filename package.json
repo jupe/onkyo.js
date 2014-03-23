@@ -2,7 +2,7 @@
   "name": "onkyo",
   "description": "Onkyo receiver remote control",
   "keywords": ["Onkyo", "remote", "Amplifier"],
-  "version": "0.2.6",
+  "version": "0.2.7",
   "homepage": "https://github.com/jupe/onkyo.js",
   "author": "Jussi Vatjus-Anttila <jussiva@gmail.com>)",
   "main": "lib/onkyo",
