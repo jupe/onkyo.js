@@ -15,11 +15,13 @@ onkyo.on("connected", function(host){
         if(ok)console.log("success:", ok);
         onkyo.VolUp(function(error, ok){
             onkyo.VolDown(function(error, ok){
+              onkyo.SetSource("VIDEO2", function(error, ok){
                 onkyo.PwrOff(function(error, ok){
                     onkyo.Close(function(error, ok){
                         process.exit();
                     });
                 });
+              });
             });
         });
     });
