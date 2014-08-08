@@ -1,6 +1,9 @@
 var Onkyo = require('../lib/onkyo');
 
-var onkyo = Onkyo.init({log: true});
+var onkyo = Onkyo.init( {
+            log: true,
+            ip: '192.168.0.9'
+        });
 onkyo.on("error", function(err){
     console.log(err);
 });
@@ -27,12 +30,13 @@ onkyo.on("connected", function(host){
     });
 
 });
-onkyo.Discover( function(err, device){
+console.log('Discovering device..')
+//onkyo.Discover( function(err, device){
     onkyo.Connect( function(){
         console.log('connected');
 
         //onkyo.SendCommand("SOURCE_SELECT", "FM");
 
     });
-});
+//});
 //setTimeout( onkyo.Close, 10000);

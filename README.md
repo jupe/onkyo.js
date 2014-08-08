@@ -7,23 +7,22 @@ Basic features already works, but currently only very limited remote-functions a
 
 Tested with TX-NR809
 
+Changeslog:
+
+* v0.3.0 - Allow direct Onkyo IP address instead of discover
+* v0.2.7 - fork merge
+* v0.1.1 - original
+
 Example:
 ```
-var onkyo = new Onkoy();
-onkyo.on("error", function(error){});
-onkyo.on("detected", function(device){});
-onkyo.on("unregonizeMsg", function(msg){});
-onkyo.on("msg", function(msg){
-  // parsed msg, e.g.
-  // {'MUTE': true}
-});
-onkyo.Discover( function(err, device){
-	console.log(device);
-	onkyo.Connect();
-  onkyo.PwrOn();      //pwr on
-  onkyo.UnMute();     //volume 4
-  onkyo.SendCommand('AUDIO', 'Volume Up'); 
-  onkyo.SendCommand("SOURCE_SELECT", "FM");
-	setTimeout( onkyo.PwrOff, 10000);
-})
+var Onkyo = require('../lib/onkyo');
+
+var onkyo = Onkyo.init({ip: '192.168.0.3' });
+onkyo.Connect();
+onkyo.PwrOn();      //pwr on
+onkyo.UnMute();     //volume 4
+onkyo.SendCommand('AUDIO', 'Volume Up'); 
+onkyo.SendCommand("SOURCE_SELECT", "FM");
+setTimeout( onkyo.PwrOff, 10000);
+
 ```
