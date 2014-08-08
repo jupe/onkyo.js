@@ -1,5 +1,5 @@
 {
-  "name": "onkyo",
+  "name": "onkyo.js",
   "description": "Onkyo receiver remote control",
   "keywords": ["Onkyo", "remote", "Amplifier"],
   "version": "0.3.0",
