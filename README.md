@@ -1,6 +1,10 @@
 onkyo.js
 ========
 
+[![NPM](https://nodei.co/npm/onkyo.js.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/onkyo.js/)
+
+[![NPM](https://nodei.co/npm-dl/onkyo.js.png)](https://nodei.co/npm/onkyo.js/)
+
 Onkyo Receiver controller module.
 
 Basic features already works, but currently only very limited remote-functions are implemented. Implementation state is more like proof-of-concept.
