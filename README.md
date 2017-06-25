@@ -13,6 +13,7 @@ Tested with TX-NR809
 
 Changeslog:
 
+* v0.3.1 - option for custom port
 * v0.3.0 - Allow direct Onkyo IP address instead of discover
 * v0.2.7 - fork merge
 * v0.1.1 - original
