@@ -13,6 +13,7 @@ Tested with TX-NR809
 
 Changeslog:
 
+* v0.3.2 - added additional sources (#4)
 * v0.3.1 - option for custom port
 * v0.3.0 - Allow direct Onkyo IP address instead of discover
 * v0.2.7 - fork merge
@@ -26,7 +27,7 @@ var onkyo = Onkyo.init({ip: '192.168.0.3' });
 onkyo.Connect();
 onkyo.PwrOn();      //pwr on
 onkyo.UnMute();     //volume 4
-onkyo.SendCommand('AUDIO', 'Volume Up'); 
+onkyo.SendCommand('AUDIO', 'Volume Up');
 onkyo.SendCommand("SOURCE_SELECT", "FM");
 setTimeout( onkyo.PwrOff, 10000);
 
