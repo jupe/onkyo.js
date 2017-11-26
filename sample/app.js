@@ -1,42 +1,23 @@
 var Onkyo = require('../lib/onkyo');
 
-var onkyo = Onkyo.init( {
-            log: true,
-            ip: '192.168.0.9'
-        });
-onkyo.on("error", function(err){
-    console.log(err);
-});
+var onkyo = new Onkyo({ip: '192.168.0.9'});
+onkyo.on("error", console.log);
+onkyo.on("detected", console.log);
+onkyo.on("connected", console.log);
+onkyo
+  .PwrOn()
+  .then(() => onkyo.VolUp())
+  .then(() => onkyo.VolDown())
+  .then(() => onkyo.SetSource("VIDEO2"))
+  .then(() => onkyo.PwrOff())
+  .then(() => onkyo.Close())
+  .then(process.exit);
 
-onkyo.on("detected", function(device){
-    console.log(device);
-});
-onkyo.on("connected", function(host){
-    console.log("connected to: "+JSON.stringify(host));
-    onkyo.PwrOn(function(error, ok){
-        if(error)console.log("error:", error);
-        if(ok)console.log("success:", ok);
-        onkyo.VolUp(function(error, ok){
-            onkyo.VolDown(function(error, ok){
-              onkyo.SetSource("VIDEO2", function(error, ok){
-                onkyo.PwrOff(function(error, ok){
-                    onkyo.Close(function(error, ok){
-                        process.exit();
-                    });
-                });
-              });
-            });
-        });
-    });
-
-});
+return;
 console.log('Discovering device..')
-//onkyo.Discover( function(err, device){
-    onkyo.Connect( function(){
-        console.log('connected');
-
-        //onkyo.SendCommand("SOURCE_SELECT", "FM");
-
+onkyo.Discover()
+    .then(device => {
+        onkyo
+          .Connect()
+          .SendCommand("SOURCE_SELECT", "FM")
     });
-//});
-//setTimeout( onkyo.Close, 10000);

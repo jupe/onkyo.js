@@ -14,6 +14,7 @@ Tested with TX-NR809
 ## Changes log:
 
 * v0.4.0 - refactored to using ES6 class
+* v0.3.2 - added additional sources (#4)
 * v0.3.1 - option for custom port
 * v0.3.0 - Allow direct Onkyo IP address instead of discover
 * v0.2.7 - fork merge
@@ -42,7 +43,7 @@ let onkyo = Onkyo.init(<option>)
 ## Example:
 ```
 let Onkyo = require('onkyo.js'); //when installed via npm
-let onkyo = Onkyo.init({ip: '192.168.0.3'});
+let onkyo = new Onkyo({ip: '192.168.0.3'});
 onkyo.on('error' error => { console.log(error); });
 onkyo.Connect();
 onkyo.PwrOn();      //pwr on
