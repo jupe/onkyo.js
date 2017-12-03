@@ -45,10 +45,10 @@ let onkyo = Onkyo.init(<option>)
 let Onkyo = require('onkyo.js'); //when installed via npm
 let onkyo = new Onkyo({ip: '192.168.0.3'});
 onkyo.on('error' error => { console.log(error); });
-onkyo.Connect();
-onkyo.PwrOn();      //pwr on
-onkyo.UnMute();     //volume 4
-onkyo.SendCommand('AUDIO', 'Volume Up');
-onkyo.SendCommand("SOURCE_SELECT", "FM");
-setTimeout( onkyo.PwrOff, 10000);
+onkyo.connect();
+onkyo.pwrOn();      //pwr on
+onkyo.unMute();     //volume 4
+onkyo.sendCommand('AUDIO', 'Volume Up');
+onkyo.sendCommand("SOURCE_SELECT", "FM");
+setTimeout( onkyo.pwrOff, 10000);
 ```
