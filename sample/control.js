@@ -17,7 +17,7 @@ onkyo.pwrOn()
   .then(() => onkyo.unMute())
 
   //.then(() => onkyo.setSource("VIDEO2"))
-  //.then(() => onkyo.pwrOff())
+  .then(() => onkyo.pwrOff())
 
   .then(() => onkyo.close())
   .then(process.exit);
