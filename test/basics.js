@@ -1,6 +1,6 @@
 const _ = require('lodash');
 const {expect} = require('chai');
-const Onkyo = require('../lib');
+const {Onkyo} = require('../lib');
 
 describe('onkyo', () => {
   describe('constructor', () => {

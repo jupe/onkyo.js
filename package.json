@@ -32,23 +32,24 @@
   "devDependencies": {
     "chai": "*",
     "eslint": "^5.2.0",
-    "eslint-plugin-import": "^2.13.0",
     "eslint-config-airbnb-base": "^12.0.2",
     "eslint-config-mocha": "0.0.0",
     "eslint-config-standard": "^11.0.0",
     "eslint-plugin-chai-expect": "^1.1.1",
+    "eslint-plugin-import": "^2.13.0",
     "eslint-plugin-mocha": "^4.10.1",
     "eslint-plugin-mocha-only": "0.0.3",
     "eslint-plugin-node": "^6.0.0",
     "eslint-plugin-promise": "^3.6.0",
-    "mocha-junit-reporter": "^1.14.0",
-    "mocha": "^5.2.0"
+    "istanbul": "^0.4.5",
+    "mocha": "^5.2.0",
+    "mocha-junit-reporter": "^1.14.0"
   },
   "contributors": [
     "Jussi Vatjus-Anttila <jussiva@gmail.com>"
   ],
   "scripts": {
-    "test": "mocha -R list",
+    "test": "MOCHA_FILE=junit/test-results.xml istanbul cover -- mocha -R mocha-junit-reporter",
     "lint": "eslint test lib",
     "lint-fix": "eslint --fix test lib"
   }
