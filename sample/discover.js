@@ -6,9 +6,12 @@ discover.on('detected', (onkyo) => {
 });
 discover.discoverFirst()
   .then((onkyo) => {
-    console.log(`Detected: ${onkyo.name}`);
-    return discover.close();
+    console.log(`Detected: ${onkyo.toString()}`);
   })
   .catch((error) => {
     console.error(error);
+  })
+  .finally(() => discover.close())
+  .then(() => {
+    discover.removeAllListeners();
   });
