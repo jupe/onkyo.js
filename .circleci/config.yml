@@ -1,0 +1,40 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/node:6.11.4
+    steps:
+      - checkout
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+      - run:
+          name: versions
+          command: |
+            node --version
+            npm --version
+      - run:
+          name: install-npm
+          command: npm install
+      - save_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+          paths:
+            - ./node_modules
+      - run:
+          name: test
+          command: npm test
+          environment:
+            REPORTER: mocha-junit-reporter
+            MOCHA_FILE: junit/test-results.xml
+      - run:
+          name: lint
+          command: npm run lint
+          when: always
+      - store_test_results:
+          path: junit
+      - store_artifacts:
+          path: junit
+      - store_artifacts:
+          path: coverage
+          prefix: coverage
+      - store_test_results:
+          path: coverage/coverage.json
