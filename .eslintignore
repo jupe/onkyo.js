@@ -1,4 +1,3 @@
 **/node_modules
-doc
-dist
 coverage
+junit
