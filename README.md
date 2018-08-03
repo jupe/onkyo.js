@@ -5,9 +5,7 @@ onkyo.js
 
 [![NPM](https://nodei.co/npm-dl/onkyo.js.png)](https://nodei.co/npm/onkyo.js/)
 
-Onkyo Receiver controller module.
-
-Basic features already works, but currently only very limited remote-functions are implemented. Implementation state is more like proof-of-concept.
+Promise based library to control Onkyo AV-receivers via EISCMP protocol.
 
 Tested with TX-NR809
 

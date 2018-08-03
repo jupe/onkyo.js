@@ -46,6 +46,7 @@
     "mocha-circleci-reporter": "0.0.3",
     "sinon": "^6.1.4"
   },
+  "bin": "./lib/cli",
   "contributors": [
     "Jussi Vatjus-Anttila <jussiva@gmail.com>"
   ],
