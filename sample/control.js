@@ -1,7 +1,11 @@
 const Promise = require('bluebird');
 const {Onkyo} = require('../lib');
 
-const onkyo = new Onkyo({ip: '192.168.1.9'});
+// this generates file 'unknown_msgs.txt' if unrecognized messages
+// is received from amplifier. Please raise issues with body if file appears.
+const collectUnrecognizedToFile = true;
+
+const onkyo = new Onkyo({ip: '192.168.1.9', collectUnrecognizedToFile});
 onkyo.on('error', error => console.error(error));
 onkyo.on('connected', () => console.log('connected'));
 onkyo.pwrOn()
@@ -11,7 +15,7 @@ onkyo.pwrOn()
   .then(() => onkyo.volDown())
 
   .then(() => Promise.delay(500))
-  // .then(() => onkyo.mute())
+  .then(() => onkyo.mute())
 
   .then(() => Promise.delay(500))
   .then(() => onkyo.unMute())
@@ -20,4 +24,8 @@ onkyo.pwrOn()
   .then(() => onkyo.pwrOff())
 
   .then(() => onkyo.close())
-  .then(process.exit);
+  .then(process.exit)
+  .catch((error) => {
+    console.log(error);
+    process.exit();
+  });

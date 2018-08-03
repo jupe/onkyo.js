@@ -6,7 +6,7 @@ const Promise = require('bluebird');
 // module under test
 const {Onkyo} = require('../lib');
 
-const {stub} = sinon;
+const {stub, spy} = sinon;
 
 
 describe('Onkyo', function () {
@@ -86,22 +86,22 @@ describe('Onkyo', function () {
     });
     const tests = [
       {
-        rx: 'PWR00',
+        rx: '!1PWR00',
         event: 'PWR',
         payload: {pwrOn: false}
       },
       {
-        rx: 'PWR01',
+        rx: '!1PWR01',
         event: 'PWR',
         payload: {pwrOn: true}
       },
       {
-        rx: 'AMT01',
+        rx: '!1AMT01',
         event: 'AMT',
         payload: {mute: true}
       },
       {
-        rx: 'AMT00',
+        rx: '!1AMT00',
         event: 'AMT',
         payload: {mute: false}
       }
@@ -110,11 +110,20 @@ describe('Onkyo', function () {
       it(obj.rx, function () {
         return new Promise((resolve) => {
           onkyo.on(obj.event, resolve);
-          onEvents.data(obj.rx);
+          onEvents.data(Onkyo.createEiscpBuffer(obj.rx));
         })
           .then((data) => {
             expect(data).to.be.deep.eql(obj.payload);
           });
+      });
+    });
+    it('unrecognize', function (done) {
+      spy(onkyo, '_parseMsg');
+      onEvents.data('abc01\x1a');
+      onkyo.once('warning', () => {
+        expect(onkyo._parseMsg.calledOnce).to.be.eql(true);
+        onkyo._parseMsg.restore();
+        done();
       });
     });
   });
@@ -124,7 +133,7 @@ describe('Onkyo', function () {
       .connect(customConnect)
       .then(() => {
         const fakeData = onEvents.data;
-        const response = 'PWR00';
+        const response = Onkyo.createEiscpBuffer('!1PWR00');
         return Promise.all([
           onkyo.sendCommand('POWER', 'Power ON'),
           Promise.delay(1).then(() => fakeData(response))
