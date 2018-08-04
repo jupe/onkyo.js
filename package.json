@@ -24,6 +24,7 @@
     }
   ],
   "dependencies": {
+    "ansi-escapes": "^3.1.0",
     "bluebird": "^3.5.1",
     "debug": "^3.1.0",
     "invariant": "^2.2.4",
