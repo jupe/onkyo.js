@@ -133,7 +133,7 @@ describe('Onkyo', function () {
       it(obj.rx, function () {
         return new Promise((resolve) => {
           onkyo.on(obj.event, resolve);
-          onEvents.data(Onkyo.createEiscpBuffer(obj.rx));
+          onEvents.data(Onkyo.createEiscpBuffer(`${obj.rx}\x1a`));
         })
           .then((data) => {
             expect(data).to.be.deep.eql(obj.payload);
@@ -142,7 +142,7 @@ describe('Onkyo', function () {
     });
     it('unrecognize', function (done) {
       spy(onkyo, '_parseMsg');
-      onEvents.data('abc01\x1a');
+      onEvents.data(Onkyo.createEiscpBuffer('abc01\x1a'));
       onkyo.once('error', () => {
         expect(onkyo._parseMsg.calledOnce).to.be.eql(true);
         onkyo._parseMsg.restore();
