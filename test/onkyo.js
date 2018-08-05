@@ -97,7 +97,7 @@ describe('Onkyo', function () {
     };
     return onkyo.connect(myConnect)
       .then(() => {
-        expect(socket.on.callCount).to.be.equal(2);
+        expect(socket.on.callCount).to.be.equal(3);
       });
   });
   describe('receive', function () {
@@ -111,22 +111,22 @@ describe('Onkyo', function () {
       {
         rx: '!1PWR00',
         event: 'PWR',
-        payload: {pwrOn: false}
+        payload: {PWR: false}
       },
       {
         rx: '!1PWR01',
         event: 'PWR',
-        payload: {pwrOn: true}
+        payload: {PWR: true}
       },
       {
         rx: '!1AMT01',
         event: 'AMT',
-        payload: {mute: true}
+        payload: {AMT: true}
       },
       {
         rx: '!1AMT00',
         event: 'AMT',
-        payload: {mute: false}
+        payload: {AMT: false}
       }
     ];
     _.each(tests, (obj) => {
