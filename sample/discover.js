@@ -1,6 +1,6 @@
-const {Discover} = require('../lib');
+const {OnkyoDiscover} = require('../lib');
 
-const discover = new Discover();
+const discover = new OnkyoDiscover();
 discover.on('detected', (onkyo) => {
   console.log(`Detected: ${onkyo.name}`);
 });

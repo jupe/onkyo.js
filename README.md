@@ -11,46 +11,53 @@ Tested with TX-NR809
 
 ## Changes log:
 
-* v0.4.0 - refactored to using ES6 class **NOTE:** !BREAKING CHANGE!
+* v0.4.0 - refactored to using ES6 class **NOTE:** BREAKING CHANGE
 * v0.3.2 - added additional sources (#4)
 * v0.3.1 - option for custom port
 * v0.3.0 - Allow direct Onkyo IP address instead of discover
 * v0.2.7 - fork merge
 * v0.1.1 - original
 
+## Example:
+
+discover first Onkyo receiver and use it
+```
+const {OnkyoDiscover} = require('onkyo.js');
+OnkyoDiscover.DiscoverFirst()
+  .then((onkyo) => {
+      return onkyo.powerOn();
+  });
+```
+
+use Onkyo by it's address
+```
+const {Onkyo} = require('onkyo.js');
+const onkyo = Onkyo({address: '192.168.0.100'});
+onkyo.powerOn();
+```
+
 ## API
 
-```
-let onkyo = Onkyo.init(<option>)
-```
-
-### options (object)
+### new Onkyo(<options>)
 * `logger` (optional, e.g wiston instance)
-* `destinationPort` (optional, default 60128)
-* `broadcastPort` (optional, default 60128)
-* `ip` (optional - could be used when Onkyo has static network configuration)
+* `name` (optional)
+* `address` / `ip`
 * `port` (optional, default 60128)
 
-### Events:
-* `unregonizeMsg`
+#### Events:
+* `connected`
 * `disconnect`
 * `error`
-* `detected`
 * `msg`
 
-## Example:
-```
-let Onkyo = require('onkyo.js'); //when installed via npm
-let onkyo = new Onkyo({ip: '192.168.0.3'});
-onkyo.on('error' error => { console.log(error); });
-onkyo.connect();
-onkyo.pwrOn();      //pwr on
-onkyo.unMute();     //volume 4
-onkyo.sendCommand('AUDIO', 'Volume Up');
-onkyo.sendCommand("SOURCE_SELECT", "FM");
-setTimeout( onkyo.pwrOff, 10000);
-```
-## api
+### new OnkyoDiscover(<options>)
+* `logger` (optional, e.g wiston instance)
+* `broadcastPort` (optional)
+* `broadcastAddress` (optional)
+
+#### Events:
+* `detected`
+* `error`
 
 Sending pre-defined commands:
 ```

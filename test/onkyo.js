@@ -4,12 +4,25 @@ const sinon = require('sinon');
 const {expect} = require('chai');
 const Promise = require('bluebird');
 // module under test
-const {Onkyo} = require('../lib');
+const {Onkyo, OnkyoError} = require('../lib');
 
 const {stub, spy} = sinon;
 
 
 describe('Onkyo', function () {
+  describe('eiscpPacketExtract', function () {
+    it('raises', function () {
+      expect(() => Onkyo.eiscpPacketExtract('')).to.throw(OnkyoError);
+      expect(() => Onkyo.eiscpPacketExtract('asd')).to.throw(OnkyoError);
+      expect(() => Onkyo.eiscpPacketExtract('000000')).to.throw(OnkyoError);
+    });
+    it('pass', function () {
+      expect(Onkyo.eiscpPacketExtract('abc\x0d')).to.be.eql('abc');
+      expect(Onkyo.eiscpPacketExtract('abc\x1a')).to.be.eql('abc');
+      expect(Onkyo.eiscpPacketExtract('abc\x1a\x0d')).to.be.eql('abc');
+      expect(Onkyo.eiscpPacketExtract('abc\x1a\x0d\x0a')).to.be.eql('abc');
+    });
+  });
   describe('constructor', function () {
     const validate = (onkyo, obj) => {
       expect(onkyo).to.be.instanceof(Onkyo);
@@ -30,19 +43,29 @@ describe('Onkyo', function () {
       validate(onkyo);
     };
     const options = {
-      empty: undefined,
-      'with logger': {logger: new Proxy({}, {get: () => () => {}})},
-      'with name': {name: 'test'},
       'with address': {address: '1.2.3.4'},
-      'with port': {port: 1}
+      'with logger': {
+        logger: new Proxy({}, {get: () => () => {}}),
+        address: '1.2.3.4'
+      },
+      'with name': {name: 'test', address: '1.2.3.4'},
+      'with port': {port: 1, address: '1.2.3.4'}
     };
+    it('raises', function () {
+      expect(() => new Onkyo()).to.throw(Error);
+      expect(() => new Onkyo({})).to.throw(Error);
+      expect(() => new Onkyo({logger: {}})).to.throw(Error);
+      expect(() => new Onkyo({port: 123})).to.throw(Error);
+      expect(() => new Onkyo({port: 123})).to.throw(Error);
+      expect(() => Onkyo.init()).to.throw(Error);
+    });
     _.each(options, (opt, key) => {
       it(key, function () {
         test(opt);
       });
     });
     it('init', function () {
-      const onkyo = Onkyo.init();
+      const onkyo = Onkyo.init({address: 'localhost'});
       validate(onkyo);
     });
   });
@@ -120,7 +143,7 @@ describe('Onkyo', function () {
     it('unrecognize', function (done) {
       spy(onkyo, '_parseMsg');
       onEvents.data('abc01\x1a');
-      onkyo.once('warning', () => {
+      onkyo.once('error', () => {
         expect(onkyo._parseMsg.calledOnce).to.be.eql(true);
         onkyo._parseMsg.restore();
         done();

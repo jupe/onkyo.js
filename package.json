@@ -54,6 +54,7 @@
   "scripts": {
     "test": "MOCHA_FILE=junit/test-results.xml istanbul cover -- _mocha --recursive -R mocha-circleci-reporter",
     "lint": "eslint test lib",
-    "lint-fix": "eslint --fix test lib"
+    "lint-fix": "eslint --fix test lib",
+    "start": "node lib/cli.js"
   }
 }
