@@ -156,7 +156,7 @@ describe('Onkyo', function () {
       .connect(customConnect)
       .then(() => {
         const fakeData = onEvents.data;
-        const response = Onkyo.createEiscpBuffer('!1PWR00');
+        const response = Onkyo.createEiscpBuffer('!1PWR00\x1a');
         return Promise.all([
           onkyo.sendCommand('POWER', 'Power ON'),
           Promise.delay(1).then(() => fakeData(response))
