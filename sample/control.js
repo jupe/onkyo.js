@@ -12,7 +12,11 @@ OnkyoDiscover.DiscoverFirst()
       });
     });
     onkyo.on('connected', () => console.log('connected'));
-    onkyo.pwrOn()
+    onkyo.getDeviceState()
+      .then((state) => {
+        console.log(state);
+      })
+      .then(() => onkyo.pwrOn())
       .then(() => Promise.delay(500))
       .then(() => onkyo.volUp())
       .then(() => Promise.delay(500))
