@@ -5,30 +5,278 @@ onkyo.js
 
 [![NPM](https://nodei.co/npm-dl/onkyo.js.png)](https://nodei.co/npm/onkyo.js/)
 
-Onkyo Receiver controller module.
-
-Basic features already works, but currently only very limited remote-functions are implemented. Implementation state is more like proof-of-concept.
+Promise based library to control Onkyo AV-receivers via EISCMP protocol.
 
 Tested with TX-NR809
 
-Changeslog:
+## Changes log:
 
+* v0.4.0 - refactored to using ES6 class **NOTE:** BREAKING CHANGE
 * v0.3.2 - added additional sources (#4)
 * v0.3.1 - option for custom port
 * v0.3.0 - Allow direct Onkyo IP address instead of discover
 * v0.2.7 - fork merge
 * v0.1.1 - original
 
-Example:
-```
-var Onkyo = require('../lib/onkyo');
+## Example:
 
-var onkyo = Onkyo.init({ip: '192.168.0.3' });
-onkyo.Connect();
-onkyo.PwrOn();      //pwr on
-onkyo.UnMute();     //volume 4
-onkyo.SendCommand('AUDIO', 'Volume Up');
-onkyo.SendCommand("SOURCE_SELECT", "FM");
-setTimeout( onkyo.PwrOff, 10000);
+discover first Onkyo receiver and use it
+```
+const {OnkyoDiscover} = require('onkyo.js');
+OnkyoDiscover.DiscoverFirst()
+  .then((onkyo) => {
+      return onkyo.powerOn();
+  });
+```
+
+use Onkyo by it's address
+```
+const {Onkyo} = require('onkyo.js');
+const onkyo = Onkyo({address: '192.168.0.100'});
+onkyo.powerOn();
+```
+
+## API
+
+### new Onkyo(<options>)
+* `logger` (optional, e.g wiston instance)
+* `name` (optional)
+* `address` / `ip`
+* `port` (optional, default 60128)
+
+#### Events:
+* `connected`
+* `disconnect`
+* `error`
+* `msg`
+
+### new OnkyoDiscover(<options>)
+* `logger` (optional, e.g wiston instance)
+* `broadcastPort` (optional)
+* `broadcastAddress` (optional)
+
+#### Events:
+* `detected`
+* `error`
+
+Sending pre-defined commands:
+```
+const OnkyoCmds = require('./onkyo.commands.js');
+onkyo.sendCommand(<group>, <command>)
+```
+Where `group` is one of string from `OnkyoCmds.getGroups()` and
+`command` is one of string from `OnkyoCmds.getGroupCommands(group)` .
+
+Sending raw command:
+```
+sendRawCommand(<data>)
+```
+
+Onkyo instance generates public API's based on [onkyo.commands.js](lib/onkyo.commands.js) -file and contains following Promise API's:
 
 ```
+powerOn()
+powerOff()
+powerStatus()
+audioMute()
+audioUnMute()
+audioVolumeUp()
+audioVolumeDown()
+audioVolumeUp1()
+audioVolumeDown1()
+audioStatusVol()
+audioStatusMute()
+sourceSelectVideo1()
+sourceSelectVideo2()
+sourceSelectCblSat()
+sourceSelectGame()
+sourceSelectAux()
+sourceSelectVideo5()
+sourceSelectPc()
+sourceSelectVideo6()
+sourceSelectVideo7()
+sourceSelectBdDvd()
+sourceSelectStream()
+sourceSelectTape1()
+sourceSelectTape2()
+sourceSelectPhono()
+sourceSelectCd()
+sourceSelectFm()
+sourceSelectAm()
+sourceSelectTuner()
+sourceSelectMusicserver()
+sourceSelectInternetradio()
+sourceSelectUsb()
+sourceSelectUsbRear()
+sourceSelectUsbC()
+sourceSelectAirplay()
+sourceSelectBt()
+sourceSelectMultich()
+sourceSelectXm()
+sourceSelectSirius()
+sourceSelectNet()
+sourceSelectSelectorPositionWrapAroundUp()
+sourceSelectSelectorPositionWrapAroundDown()
+sourceSelectStatus()
+soundModeStereo()
+soundModeDirect()
+soundModeSurround()
+soundModeFilm()
+soundModeThx()
+soundModeAction()
+soundModeMusical()
+soundModeMonoMovie()
+soundModeOrchestra()
+soundModeUnplugged()
+soundModeStudioMix()
+soundModeTvLogic()
+soundModeAllChStereo()
+soundModeTheaterDimensional()
+soundModeEnhanced7Enhance()
+soundModeMono()
+soundModePureAudio()
+soundModeMultiplex()
+soundModeFullMono()
+soundModeDolbyVirtual()
+soundMode51ChSurround()
+soundModeStraightDecode1()
+soundModeDolbyExDtsEs()
+soundModeDolbyEx2()
+soundModeThxCinema()
+soundModeThxSurroundEx()
+soundModeU2S2CinemaCinema2()
+soundModeMusicMode()
+soundModeGamesMode()
+soundModePliiPliIxMovie()
+soundModePliiPliIxMusic()
+soundModeNeo6Cinema()
+soundModeNeo6Music()
+soundModePliiPliIxThxCinema()
+soundModeNeo6ThxCinema()
+soundModePliiPliIxGame()
+soundModeNeuralSurr3()
+soundModeNeuralThx()
+soundModePliiThxGames()
+soundModeNeo6ThxGames()
+soundModeListeningModeWrapAroundUp()
+soundModeListeningModeWrapAroundDown()
+soundModeStatus()
+speakerAbControlSpeakerAOff()
+speakerAbControlSpeakerAOn()
+speakerAbControlSpeakerBOff()
+speakerAbControlSpeakerBOn()
+speakerAbControlStatusA()
+speakerAbControlStatusB()
+zone2PowerOn()
+zone2PowerStandby()
+zone2PowerStatus()
+zone2AudioMute()
+zone2AudioUnmute()
+zone2AudioMuteQstn()
+zone2AudioVolUp()
+zone2AudioVolDown()
+zone2AudioVolUp1()
+zone2AudioVolDown1()
+zone2AudioVolQstn()
+zone2SourceSelectCblSat()
+zone2SourceSelectGame()
+zone2SourceSelectAux()
+zone2SourceSelectBdDvd()
+zone2SourceSelectStrmBox()
+zone2SourceSelectTv()
+zone2SourceSelectPhono()
+zone2SourceSelectCd()
+zone2SourceSelectFm()
+zone2SourceSelectAm()
+zone2SourceSelectTuner()
+zone2SourceSelectUsbFront()
+zone2SourceSelectNet()
+zone2SourceSelectUsbRear()
+zone2SourceSelectBt()
+zone2SourceSelectHdmi5()
+zone2SourceSelectQstn()
+zone2SourceSelectUp()
+zone2SourceSelectDown()
+zone2NetPlay()
+zone2NetStop()
+zone2NetPause()
+zone2NetPlayPause()
+zone2NetTrackUp()
+zone2NetTrackDown()
+zone2NetChannelUp()
+zone2NetChannelDown()
+zone2NetFf()
+zone2NetRew()
+zone2NetRepeat()
+zone2NetRandom()
+zone2NetRepeatShuffle()
+zone2NetDisplay()
+zone2NetMemory()
+zone2NetRight()
+zone2NetLeft()
+zone2NetUp()
+zone2NetDown()
+zone2NetSelect()
+zone2NetReturn()
+zone3PowerOn()
+zone3PowerStandby()
+zone3PowerStatus()
+zone3AudioMute()
+zone3AudioUnmute()
+zone3AudioMuteQstn()
+zone3AudioVolUp()
+zone3AudioVolDown()
+zone3AudioVolUp1()
+zone3AudioVolDown1()
+zone3AudioVolQstn()
+zone3SourceSelectCblSat()
+zone3SourceSelectGame()
+zone3SourceSelectAux()
+zone3SourceSelectBdDvd()
+zone3SourceSelectStrmBox()
+zone3SourceSelectTv()
+zone3SourceSelectPhono()
+zone3SourceSelectCd()
+zone3SourceSelectFm()
+zone3SourceSelectAm()
+zone3SourceSelectTuner()
+zone3SourceSelectUsbFront()
+zone3SourceSelectNet()
+zone3SourceSelectUsbRear()
+zone3SourceSelectBt()
+zone3SourceSelectHdmi5()
+zone3SourceSelectQstn()
+zone3SourceSelectUp()
+zone3SourceSelectDown()
+zone3NetPlay()
+zone3NetStop()
+zone3NetPause()
+zone3NetPlayPause()
+zone3NetTrackUp()
+zone3NetTrackDown()
+zone3NetChannelUp()
+zone3NetChannelDown()
+zone3NetFf()
+zone3NetRew()
+zone3NetRepeat()
+zone3NetRandom()
+zone3NetRepeatShuffle()
+zone3NetDisplay()
+zone3NetMemory()
+zone3NetRight()
+zone3NetLeft()
+zone3NetUp()
+zone3NetDown()
+zone3NetSelect()
+zone3NetReturn()
+pwrToggle()
+muteToggle()
+```
+
+Note: List is generated using:
+```
+(new (require('onkyo.js').Onkyo)({address:'localhost'})).apis.forEach(api => console.log(api.api+'()'))
+```
+
+## LICENSE
+[MIT](LICENSE)
