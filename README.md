@@ -11,19 +11,31 @@ Tested with TX-NR809
 
 ## Changes log:
 
-* v0.4.1 - introduce cli and fix API expose
-* v0.4.0 - refactored to using ES6 class **NOTE:** BREAKING CHANGE
-* v0.3.2 - added additional sources (#4)
-* v0.3.1 - option for custom port
-* v0.3.0 - Allow direct Onkyo IP address instead of discover
-* v0.2.7 - fork merge
-* v0.1.1 - original
+See releases [here](https://github.com/jupe/onkyo.js/releases)
 
 ## CLI
 
-Module also provide simple command line interface.
-**NOTE:** To use cli install library globally (`npm i -g onkyo.js`).
+**NOTE:** To use cli it's recommend to install library globally (`npm i -g onkyo.js`).
+Otherwise you can start cli by calling `./cli.js` in project root folder.
+
 ```
+$ onkyo.js
+
+Keys
+1 - set FM
+2 - set CBL/SAT
+3 - set BD/DVD
+5 - set CD
+6 - set NET
++ - volUp
+- - volDown
+p - pwrToggle
+c - set ÇD
+s - set Stereo
+d - set direct
+t - set Thx
+m - toggle Mute
+ctrl+c - Exit
 ```
 
 ## Example:
