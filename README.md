@@ -1,9 +1,15 @@
 onkyo.js
 ========
 
+[![CircleCI](https://circleci.com/gh/jupe/onkyo.js/tree/master.svg?style=svg)](https://circleci.com/gh/jupe/onkyo.js/tree/master)
+[![NPM](https://img.shields.io/npm/dm/onkyo.js.svg?style=flat)](https://nodei.co/npm/onkyo.js/)
+[![dependencies Status](https://david-dm.org/jupe/onkyo.js/status.svg)](https://david-dm.org/jupe/onkyo.js)
+[![Coverage Status](https://coveralls.io/repos/github/jupe/onkyo.js/badge.svg)](https://coveralls.io/github/jupe/onkyo.js)
+[![Greenkeeper](https://img.shields.io/badge/dependencies-monitored-green.svg)](https://greenkeeper.io)
+
 [![NPM](https://nodei.co/npm/onkyo.js.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/onkyo.js/)
 
-[![NPM](https://nodei.co/npm-dl/onkyo.js.png)](https://nodei.co/npm/onkyo.js/)
+<!--[![NPM](https://nodei.co/npm-dl/onkyo.js.png)](https://nodei.co/npm/onkyo.js/)-->
 
 Promise based library and cli to control Onkyo AV-receivers via EISCMP protocol.
 
