@@ -26,6 +26,9 @@ jobs:
             REPORTER: mocha-junit-reporter
             MOCHA_FILE: junit/test-results.xml
       - run:
+          name: coveralls
+          command: cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
+      - run:
           name: lint
           command: npm run lint
           when: always
