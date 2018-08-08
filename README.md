@@ -64,6 +64,24 @@ onkyo.powerOn();
 
 ## API
 
+### new OnkyoDiscover({options})
+options:
+* `logger` (optional, e.g wiston instance)
+* `broadcastPort` (optional)
+* `broadcastAddress` (optional)
+
+API's
+* `discover`
+* `discoverFirst`
+  or `OnkyoDiscover.DiscoverFirst()` without instance
+* `close`
+* `listen`
+
+OnkyoDiscover instance inherits EventEmitter and trigger following events:
+
+* `detected`
+* `error`
+
 ### new Onkyo({options})
 options:
 * `logger` (optional, e.g wiston instance)
@@ -79,20 +97,14 @@ Onkyo instance inherits EventEmitter and trigger following events:
 * `error`
   When something wrong happens or received message that library cannot handle
 
-### new OnkyoDiscover({options})
-options:
-* `logger` (optional, e.g wiston instance)
-* `broadcastPort` (optional)
-* `broadcastAddress` (optional)
-
-#### Events:
-* `detected`
-* `error`
-
-Sending pre-defined commands:
+e.g.
 ```
 const {OnkyoCmds, Onkyo} = require('onkyo.js');
 const onkyo = new Onkyo({ip: '196.168.0.10'});
+```
+
+Sending pre-defined commands:
+```
 onkyo.sendCommand(<group>, <command>);
 ```
 Where `group` is one of string from `OnkyoCmds.getGroups()` and
@@ -100,8 +112,6 @@ Where `group` is one of string from `OnkyoCmds.getGroups()` and
 
 Sending raw command:
 ```
-const {Onkyo} = require('onkyo.js');
-const onkyo = new Onkyo({ip: '196.168.0.10'});
 onkyo.sendRawCommand(<data>)
 ```
 
