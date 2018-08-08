@@ -32,6 +32,7 @@
   },
   "devDependencies": {
     "chai": "*",
+    "coveralls": "^3.0.2",
     "eslint": "^5.2.0",
     "eslint-config-airbnb-base": "^12.0.2",
     "eslint-config-mocha": "0.0.0",
