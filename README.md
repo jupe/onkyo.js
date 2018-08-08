@@ -64,19 +64,23 @@ onkyo.powerOn();
 
 ## API
 
-### new Onkyo(<options>)
+### new Onkyo({options})
+options:
 * `logger` (optional, e.g wiston instance)
 * `name` (optional)
 * `address` / `ip`
 * `port` (optional, default 60128)
 
-#### Events:
+Onkyo instance inherits EventEmitter and trigger following events:
 * `connected`
+  When connection is established
 * `disconnect`
+  When connection is lost
 * `error`
-* `msg`
+  When something wrong happens or received message that library cannot handle
 
-### new OnkyoDiscover(<options>)
+### new OnkyoDiscover({options})
+options:
 * `logger` (optional, e.g wiston instance)
 * `broadcastPort` (optional)
 * `broadcastAddress` (optional)
@@ -87,15 +91,18 @@ onkyo.powerOn();
 
 Sending pre-defined commands:
 ```
-const OnkyoCmds = require('./onkyo.commands.js');
-onkyo.sendCommand(<group>, <command>)
+const {OnkyoCmds, Onkyo} = require('onkyo.js');
+const onkyo = new Onkyo({ip: '196.168.0.10'});
+onkyo.sendCommand(<group>, <command>);
 ```
 Where `group` is one of string from `OnkyoCmds.getGroups()` and
 `command` is one of string from `OnkyoCmds.getGroupCommands(group)` .
 
 Sending raw command:
 ```
-sendRawCommand(<data>)
+const {Onkyo} = require('onkyo.js');
+const onkyo = new Onkyo({ip: '196.168.0.10'});
+onkyo.sendRawCommand(<data>)
 ```
 
 Onkyo instance generates public API's based on [onkyo.commands.js](lib/onkyo.commands.js) -file and contains following Promise API's:
