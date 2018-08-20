@@ -170,8 +170,40 @@ describe('Onkyo', function () {
     let onkyo;
     beforeEach(function () {
       onkyo = new Onkyo({address: 'localhost'});
+      stub(onkyo, '_client');
+      stub(onkyo, '_sendISCPpacket');
       return onkyo
         .connect(customConnect);
+    });
+    describe('setVolume', function () {
+      it('throws when invalid input', function () {
+        expect(() => onkyo.setVolume('')).to.throw(Error);
+        expect(() => onkyo.setVolume(0.1)).to.throw(Error);
+        expect(() => onkyo.setVolume(-1)).to.throw(Error);
+        expect(() => onkyo.setVolume(101)).to.throw(Error);
+      });
+      it('pass', function () {
+        const vol = 50;
+        onkyo._sendISCPpacket.callsFake(() => {
+          onkyo.emit('MVL', vol.toString(16));
+        });
+        return onkyo.setVolume(vol)
+          .then((volume) => {
+            expect(volume).to.be.eql(vol);
+          });
+      });
+    });
+    it('getVolume', function () {
+      it('pass', function () {
+        const vol = 10;
+        onkyo._sendISCPpacket.callsFake(() => {
+          onkyo.emit('MVL', vol.toString(16));
+        });
+        return onkyo.getVolume()
+          .then((volume) => {
+            expect(volume).to.be.eql(vol);
+          });
+      });
     });
     // @TODO more test..
   });

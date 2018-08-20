@@ -115,6 +115,14 @@ Sending raw command:
 onkyo.sendRawCommand(<data>)
 ```
 
+Basic volume API's:
+```
+onkyo.volUp()
+onkyo.volDown()
+onkyo.setVolume(<volume>) // volume between 0-100
+onkyo.getVolume()         // resolves current volume
+```
+
 Onkyo instance generates public API's based on [onkyo.commands.js](lib/onkyo.commands.js) -file and contains following Promise API's:
 
 ```
