@@ -1,8 +1,13 @@
 version: 2
+
+defaults: &defaults
+  working_directory: ~/repo
+  docker:
+    - image: circleci/node:6.11.4
+
 jobs:
-  build:
-    docker:
-      - image: circleci/node:6.11.4
+  test:
+    <<: *defaults
     steps:
       - checkout
       - restore_cache:
@@ -19,6 +24,9 @@ jobs:
           key: dependency-cache-{{ checksum "package.json" }}
           paths:
             - ./node_modules
+      - persist_to_workspace:
+          root: ~/repo
+          paths: .
       - run:
           name: test
           command: npm test
@@ -41,3 +49,36 @@ jobs:
           prefix: coverage
       - store_test_results:
           path: coverage/coverage.json
+  deploy:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/repo
+      - run:
+          name: Authenticate with registry
+          command: echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > ~/repo/.npmrc
+      - run:
+          name: Publish package
+          command: npm publish
+workflows:
+  version: 2
+  test:
+    jobs:
+      - test:
+          filters:
+            tags:
+              only: /^v.*/
+  test-deploy:
+    jobs:
+      - test:
+          filters:
+            tags:
+              only: /^v.*/
+      - deploy:
+          requires:
+            - test
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
