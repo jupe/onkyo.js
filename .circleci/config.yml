@@ -65,6 +65,9 @@ workflows:
   test-deploy:
     jobs:
       - test
+          filters:  # required since `deploy` has tag filters AND requires `build`
+            tags:
+              only: /.*/
       - deploy:
           requires:
             - test
