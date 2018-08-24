@@ -214,14 +214,16 @@ describe('Onkyo', function () {
         () => onkyo._parseClientPacket('SLI02', pypass), // Game
         () => onkyo._parseClientPacket('MVL01', pypass), // VOL 1
         () => onkyo._parseClientPacket('AMT00', pypass), // unmute
-        () => onkyo._parseClientPacket('LMD01', pypass)  // sound mode direct
+        () => onkyo._parseClientPacket('LMD01', pypass) // sound mode direct
       ];
       _.each(callFakes, (callFake, index) => {
         onkyo._sendISCPpacket.onCall(index).callsFake(callFake);
       });
       return onkyo.getDeviceState()
         .then((states) => {
-          const shouldBe = {PWR: true, SLI: 'GAME', MVL: 1, AMT: false, LMD: 'DIRECT'};
+          const shouldBe = {
+            PWR: true, SLI: 'GAME', MVL: 1, AMT: false, LMD: 'DIRECT'
+          };
           expect(states).to.be.deep.equal(shouldBe);
           expect(onkyo.isOn()).to.be.true;
         });
