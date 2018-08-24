@@ -117,10 +117,12 @@ onkyo.sendRawCommand(<data>)
 
 Basic volume API's:
 ```
-onkyo.volUp()
-onkyo.volDown()
-onkyo.setVolume(<volume>) // volume between 0-100
-onkyo.getVolume()         // resolves current volume
+<Promise> onkyo.volUp()             // volume +1, resolves when ready
+<Promise> onkyo.volDown()           // volume -1, resolves when ready
+<Promise> onkyo.setVolume(<volume>) // volume between 0-100, resolves when ready
+<Promise> onkyo.getVolume()         // resolves current volume
+<boolean> onkyo.isOn()              // get cached power state. Returns undefined if state is unknown
+<boolean> onkyo.isOff()             // get cached power state. Returns undefined if state is unknown
 ```
 
 Onkyo instance generates public API's based on [onkyo.commands.js](lib/onkyo.commands.js) -file and contains following Promise API's:

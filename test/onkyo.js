@@ -156,7 +156,7 @@ describe('Onkyo', function () {
       .connect(customConnect)
       .then(() => {
         const fakeData = onEvents.data;
-        const response = Onkyo.createEiscpBuffer('!1PWR00\x1a');
+        const response = Onkyo.createEiscpBuffer('!1PWR01\x1a');
         return Promise.all([
           onkyo.sendCommand('POWER', 'ON'),
           Promise.delay(1).then(() => fakeData(response))
@@ -164,10 +164,13 @@ describe('Onkyo', function () {
       })
       .then(() => {
         expect(socket.write.callCount).to.be.equal(1);
+        expect(onkyo.isOn()).to.be.true;
+        expect(onkyo.isOff()).to.be.false;
       });
   });
   describe('api', function () {
     let onkyo;
+    const pypass = x => x;
     beforeEach(function () {
       onkyo = new Onkyo({address: 'localhost'});
       stub(onkyo, '_client');
@@ -197,13 +200,33 @@ describe('Onkyo', function () {
       it('pass', function () {
         const vol = 10;
         onkyo._sendISCPpacket.callsFake(() => {
-          onkyo.emit('MVL', vol.toString(16));
+          onkyo._parseClientPacket(`MVL${vol.toString(16)}`, pypass);
         });
         return onkyo.getVolume()
           .then((volume) => {
             expect(volume).to.be.eql(vol);
           });
       });
+    });
+    it('getDeviceState', function () {
+      const callFakes = [
+        () => onkyo._parseClientPacket('PWR01', pypass), // POWER on
+        () => onkyo._parseClientPacket('SLI02', pypass), // Game
+        () => onkyo._parseClientPacket('MVL01', pypass), // VOL 1
+        () => onkyo._parseClientPacket('AMT00', pypass), // unmute
+        () => onkyo._parseClientPacket('LMD01', pypass) // sound mode direct
+      ];
+      _.each(callFakes, (callFake, index) => {
+        onkyo._sendISCPpacket.onCall(index).callsFake(callFake);
+      });
+      return onkyo.getDeviceState()
+        .then((states) => {
+          const shouldBe = {
+            PWR: true, SLI: 'GAME', MVL: 1, AMT: false, LMD: 'DIRECT'
+          };
+          expect(states).to.be.deep.equal(shouldBe);
+          expect(onkyo.isOn()).to.be.true;
+        });
     });
     // @TODO more test..
   });

@@ -27,6 +27,7 @@
         "one-var": ["error", { "initialized": "never" }],
         "one-var-declaration-per-line": ["error", "initializations"],
         "func-names": ["error", "as-needed"],
-        "object-shorthand": "off"
+        "object-shorthand": "off",
+        "no-unused-expressions": "off"
     }
 }
