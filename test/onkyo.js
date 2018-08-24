@@ -193,7 +193,7 @@ describe('Onkyo', function () {
           });
       });
     });
-    it('getVolume', function () {
+    describe('getVolume', function () {
       it('pass', function () {
         const vol = 10;
         onkyo._sendISCPpacket.callsFake(() => {
