@@ -121,8 +121,8 @@ Basic volume API's:
 <Promise> onkyo.volDown()           // volume -1, resolves when ready
 <Promise> onkyo.setVolume(<volume>) // volume between 0-100, resolves when ready
 <Promise> onkyo.getVolume()         // resolves current volume
-<boolean> onkyo.isOn()              // get cached power state. Returns undefined if state is unknown
-<boolean> onkyo.isOff()             // get cached power state. Returns undefined if state is unknown
+<Promise> onkyo.isOn()              // resolves true if powers on
+<Promise> onkyo.isOff()             // resolves false if powers off
 ```
 
 Onkyo instance generates public API's based on [onkyo.commands.js](lib/onkyo.commands.js) -file and contains following Promise API's:
