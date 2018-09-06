@@ -6,7 +6,7 @@
     "remote",
     "Amplifier"
   ],
-  "version": "0.5.0",
+  "version": "0.6.0",
   "homepage": "https://github.com/jupe/onkyo.js",
   "author": "Jussi Vatjus-Anttila <jussiva@gmail.com>)",
   "main": "./lib",
