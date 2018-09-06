@@ -164,8 +164,6 @@ describe('Onkyo', function () {
       })
       .then(() => {
         expect(socket.write.callCount).to.be.equal(1);
-        expect(onkyo.isOn()).to.be.true;
-        expect(onkyo.isOff()).to.be.false;
       });
   });
   describe('api', function () {
@@ -214,7 +212,11 @@ describe('Onkyo', function () {
         () => onkyo._parseClientPacket('SLI02', pypass), // Game
         () => onkyo._parseClientPacket('MVL01', pypass), // VOL 1
         () => onkyo._parseClientPacket('AMT00', pypass), // unmute
-        () => onkyo._parseClientPacket('LMD01', pypass) // sound mode direct
+        () => onkyo._parseClientPacket('LMD01', pypass), // sound mode direct
+        () => onkyo._parseClientPacket('PWR01', pypass), // POWER on
+        () => onkyo._parseClientPacket('PWR01', pypass), // POWER on
+        () => onkyo._parseClientPacket('PWR00', pypass), // POWER off
+        () => onkyo._parseClientPacket('PWR00', pypass) // POWER off
       ];
       _.each(callFakes, (callFake, index) => {
         onkyo._sendISCPpacket.onCall(index).callsFake(callFake);
@@ -225,7 +227,22 @@ describe('Onkyo', function () {
             PWR: true, SLI: 'GAME', MVL: 1, AMT: false, LMD: 'DIRECT'
           };
           expect(states).to.be.deep.equal(shouldBe);
-          expect(onkyo.isOn()).to.be.true;
+          return onkyo.isOn();
+        })
+        .then((on) => {
+          expect(on).to.be.true;
+          return onkyo.isOff();
+        })
+        .then((off) => {
+          expect(off).to.be.false;
+          return onkyo.isOn();
+        })
+        .then((on) => {
+          expect(on).to.be.false;
+          return onkyo.isOff();
+        })
+        .then((off) => {
+          expect(off).to.be.true;
         });
     });
     // @TODO more test..
