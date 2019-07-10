@@ -6,7 +6,7 @@
     "remote",
     "Amplifier"
   ],
-  "version": "0.6.0",
+  "version": "0.6.1",
   "homepage": "https://github.com/jupe/onkyo.js",
   "author": "Jussi Vatjus-Anttila <jussiva@gmail.com>)",
   "main": "./lib",
@@ -19,21 +19,21 @@
   },
   "license": "MIT",
   "dependencies": {
-    "ansi-escapes": "^3.1.0",
-    "bluebird": "^3.5.1",
-    "debug": "^3.1.0",
+    "ansi-escapes": "^3.2.0",
+    "bluebird": "^3.5.5",
+    "debug": "^3.2.6",
     "invariant": "^2.2.4",
-    "lodash": "^4.17.10"
+    "lodash": "^4.17.13"
   },
   "devDependencies": {
-    "chai": "^4.1.2",
-    "coveralls": "^3.0.2",
-    "eslint": "^5.4.0",
+    "chai": "^4.2.0",
+    "coveralls": "^3.0.4",
+    "eslint": "^5.16.0",
     "eslint-config-airbnb-base": "^12.0.2",
     "eslint-config-mocha": "0.0.0",
     "eslint-config-standard": "^11.0.0",
-    "eslint-plugin-chai-expect": "^1.1.1",
-    "eslint-plugin-import": "^2.13.0",
+    "eslint-plugin-chai-expect": "^1.2.0",
+    "eslint-plugin-import": "^2.18.0",
     "eslint-plugin-mocha": "^4.10.1",
     "eslint-plugin-mocha-only": "0.0.3",
     "eslint-plugin-node": "^6.0.0",
@@ -41,7 +41,7 @@
     "istanbul": "^0.4.5",
     "mocha": "^5.2.0",
     "mocha-circleci-reporter": "0.0.3",
-    "sinon": "^6.1.4"
+    "sinon": "^6.3.5"
   },
   "bin": "./cli.js",
   "contributors": [
