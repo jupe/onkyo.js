@@ -24,7 +24,7 @@
     "debug": "^3.2.6",
     "invariant": "^2.2.4",
     "lodash": "^4.17.20",
-    "snyk": "^1.340.0"
+    "snyk": "^1.391.1"
   },
   "devDependencies": {
     "chai": "^4.2.0",
