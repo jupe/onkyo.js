@@ -11,7 +11,7 @@ onkyo.js
 
 <!--[![NPM](https://nodei.co/npm-dl/onkyo.js.png)](https://nodei.co/npm/onkyo.js/)-->
 
-Promise based library and cli to control Onkyo AV-receivers via EISCMP protocol.
+Promise based library and cli to control Onkyo & Pioneer AV-receivers via EISCMP protocol.
 
 Tested with TX-NR809
 
@@ -46,7 +46,7 @@ ctrl+c - Exit
 
 ## Example:
 
-discover first Onkyo receiver and use it
+discover first Onkyo/Pioneer receiver and use it
 ```
 const {OnkyoDiscover} = require('onkyo.js');
 OnkyoDiscover.DiscoverFirst()
