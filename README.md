@@ -115,15 +115,35 @@ Sending raw command:
 onkyo.sendRawCommand(<data>)
 ```
 
-Basic volume API's:
+Basic API:
 ```
-<Promise> onkyo.volUp()             // volume +1, resolves when ready
-<Promise> onkyo.volDown()           // volume -1, resolves when ready
-<Promise> onkyo.setVolume(<volume>) // volume between 0-100, resolves when ready
-<Promise> onkyo.getVolume()         // resolves current volume
-<Promise> onkyo.isOn()              // resolves true if powers on
-<Promise> onkyo.isOff()             // resolves false if powers off
+// power
+<Promise> onkyo.isOn(<zone>)              // resolves true if powers on
+<Promise> onkyo.isOff(<zone>)             // resolves false if powers off
+<Promise> onkyo.pwrToggle(<zone>)         // toggle power, resolves when ready
+<Promise> onkyo.pwrOn(<zone>)             // power on, resolves when ready
+<Promise> onkyo.pwrOff(<zone>)            // power off, resolves when ready
+
+// volume
+<Promise> onkyo.volUp(<zone>)             // volume +1, resolves when ready
+<Promise> onkyo.volDown(<zone>)           // volume -1, resolves when ready
+<Promise> onkyo.setVolume(<volume>, <zone>) // volume between 0-100, resolves when ready
+<Promise> onkyo.getVolume(<zone>)         // resolves current volume
+
+// mute
+<Promise> onkyo.mute(<zone>)              // mute, resolves when ready
+<Promise> onkyo.unMute(<zone>)            // unmute, resolves when ready
+<Promise> onkyo.getMute(<zone>)           // resolves true if mute is on
+
+// source/input
+<Promise> onkyo.getSource(<zone>)         // resolves current source/input
+<Promise> onkyo.setSource(<source>, <zone>) // source selection, resolves when ready
+
+// sound mode
+<Promise> onkyo.getSoundMode(<zone>)         // resolves current sound mode
+<Promise> onkyo.setSoundMode(<mode>, <zone>) // sound mode selection, resolves when ready
 ```
+\* `<zone>` can be empty for main zone or `"zone2"`/`"zone3"`
 
 Onkyo instance generates public API's based on [onkyo.commands.js](lib/onkyo.commands.js) -file and contains following Promise API's:
 
