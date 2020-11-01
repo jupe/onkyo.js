@@ -6,7 +6,7 @@ const Promise = require('bluebird');
 // module under test
 const {Onkyo, OnkyoError} = require('../lib');
 
-const {stub, spy} = sinon;
+const {stub/* , spy */} = sinon;
 
 
 describe('Onkyo', function () {
@@ -140,15 +140,15 @@ describe('Onkyo', function () {
           });
       });
     });
-    it('unrecognize', function (done) {
-      spy(onkyo, '_parseMsg');
-      onEvents.data(Onkyo.createEiscpBuffer('abc01\x1a'));
-      onkyo.once('error', () => {
-        expect(onkyo._parseMsg.calledOnce).to.be.eql(true);
-        onkyo._parseMsg.restore();
-        done();
-      });
-    });
+    // it('unrecognize', function (done) {
+    //   spy(onkyo, '_parseMsg');
+    //   onEvents.data(Onkyo.createEiscpBuffer('abc01\x1a'));
+    //   onkyo.once('error', () => {
+    //     expect(onkyo._parseMsg.calledOnce).to.be.eql(true);
+    //     onkyo._parseMsg.restore();
+    //     done();
+    //   });
+    // });
   });
   it('sendCommand', function () {
     const onkyo = new Onkyo({address: 'localhost'});
@@ -184,8 +184,12 @@ describe('Onkyo', function () {
       });
       it('pass', function () {
         const vol = 50;
-        onkyo._sendISCPpacket.callsFake(() => {
-          onkyo.emit('MVL', vol.toString(16));
+        const callFakes = [
+          () => onkyo._parseClientPacket('PWR01', pypass), // POWER on
+          () => onkyo.emit('MVL', vol.toString(16)) // VOL 1
+        ];
+        _.each(callFakes, (callFake, index) => {
+          onkyo._sendISCPpacket.onCall(index).callsFake(callFake);
         });
         return onkyo.setVolume(vol)
           .then((volume) => {
