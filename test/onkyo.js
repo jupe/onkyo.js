@@ -209,6 +209,69 @@ describe('Onkyo', function () {
           });
       });
     });
+    describe('getMute', function () {
+      it('pass', function () {
+        onkyo._sendISCPpacket.callsFake(() => {
+          onkyo._parseClientPacket('AMT01', pypass);
+        });
+        return onkyo.getMute()
+          .then((volume) => {
+            expect(volume).to.be.eql(true);
+          });
+      });
+    });
+    describe('getSource', function () {
+      it('pass', function () {
+        onkyo._sendISCPpacket.callsFake(() => {
+          onkyo._parseClientPacket('SLI2B', pypass);
+        });
+        return onkyo.getSource()
+          .then((volume) => {
+            expect(volume).to.be.eql('NET');
+          });
+      });
+    });
+    describe('setSource', function () {
+      it('pass', function () {
+        const src = 'NET'; // SOURCE NET
+        const callFakes = [
+          () => onkyo.emit('SLI', src)
+        ];
+        _.each(callFakes, (callFake, index) => {
+          onkyo._sendISCPpacket.onCall(index).callsFake(callFake);
+        });
+        return onkyo.setSource(src)
+          .then((source) => {
+            expect(source).to.be.eql(src);
+          });
+      });
+    });
+    describe('getSoundMode', function () {
+      it('pass', function () {
+        onkyo._sendISCPpacket.callsFake(() => {
+          onkyo._parseClientPacket('LMD02', pypass);
+        });
+        return onkyo.getSoundMode()
+          .then((volume) => {
+            expect(volume).to.be.eql('SURROUND');
+          });
+      });
+    });
+    describe('setSoundMode', function () {
+      it('pass', function () {
+        const mode = 'SURROUND'; // SOURCE NET
+        const callFakes = [
+          () => onkyo.emit('LMD', mode)
+        ];
+        _.each(callFakes, (callFake, index) => {
+          onkyo._sendISCPpacket.onCall(index).callsFake(callFake);
+        });
+        return onkyo.setSoundMode(mode)
+          .then((soundMode) => {
+            expect(soundMode).to.be.eql(mode);
+          });
+      });
+    });
     it('getDeviceState', function () {
       const callFakes = [
         () => onkyo._parseClientPacket('PWR01', pypass), // POWER on
