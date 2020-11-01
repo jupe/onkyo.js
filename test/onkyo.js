@@ -181,7 +181,6 @@ describe('Onkyo', function () {
         expect(() => onkyo.setVolume('')).to.throw(Error);
         expect(() => onkyo.setVolume(0.1)).to.throw(Error);
         expect(() => onkyo.setVolume(-1)).to.throw(Error);
-        expect(() => onkyo.setVolume(101)).to.throw(Error);
       });
       it('pass', function () {
         const vol = 50;
