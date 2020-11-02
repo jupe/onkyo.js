@@ -119,7 +119,7 @@ Basic API:
 ```
 // power
 <Promise> onkyo.isOn(<zone>)              // resolves true if powers on
-<Promise> onkyo.isOff(<zone>)             // resolves false if powers off
+<Promise> onkyo.isOff(<zone>)             // resolves true if powers off
 <Promise> onkyo.pwrToggle(<zone>)         // toggle power, resolves when ready
 <Promise> onkyo.pwrOn(<zone>)             // power on, resolves when ready
 <Promise> onkyo.pwrOff(<zone>)            // power off, resolves when ready
@@ -143,7 +143,7 @@ Basic API:
 <Promise> onkyo.getSoundMode(<zone>)         // resolves current sound mode
 <Promise> onkyo.setSoundMode(<mode>, <zone>) // sound mode selection, resolves when ready
 ```
-\* `<zone>` can be empty for main zone or `"zone2"`/`"zone3"`
+\* `<zone>` is optional and by default control main zone, for other zones add `"zone2"`or `"zone3"`.
 
 Onkyo instance generates public API's based on [onkyo.commands.js](lib/onkyo.commands.js) -file and contains following Promise API's:
 

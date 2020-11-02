@@ -140,15 +140,6 @@ describe('Onkyo', function () {
           });
       });
     });
-    // it('unrecognize', function (done) {
-    //   spy(onkyo, '_parseMsg');
-    //   onEvents.data(Onkyo.createEiscpBuffer('abc01\x1a'));
-    //   onkyo.once('error', () => {
-    //     expect(onkyo._parseMsg.calledOnce).to.be.eql(true);
-    //     onkyo._parseMsg.restore();
-    //     done();
-    //   });
-    // });
   });
   it('sendCommand', function () {
     const onkyo = new Onkyo({address: 'localhost'});
@@ -259,7 +250,7 @@ describe('Onkyo', function () {
     });
     describe('setSoundMode', function () {
       it('pass', function () {
-        const mode = 'SURROUND'; // SOURCE NET
+        const mode = 'SURROUND';
         const callFakes = [
           () => onkyo.emit('LMD', mode)
         ];
