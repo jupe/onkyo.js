@@ -6,7 +6,7 @@ const Promise = require('bluebird');
 // module under test
 const {Onkyo, OnkyoError} = require('../lib');
 
-const {stub/* , spy */} = sinon;
+const {stub, spy} = sinon;
 
 
 describe('Onkyo', function () {
@@ -138,6 +138,15 @@ describe('Onkyo', function () {
           .then((data) => {
             expect(data).to.be.deep.eql(obj.payload);
           });
+      });
+    });
+    it('unrecognize', function (done) {
+      spy(onkyo, '_parseMsg');
+      onEvents.data(Onkyo.createEiscpBuffer('abc01\x1a'));
+      onkyo.once('error', () => {
+        expect(onkyo._parseMsg.calledOnce).to.be.eql(true);
+        onkyo._parseMsg.restore();
+        done();
       });
     });
   });
