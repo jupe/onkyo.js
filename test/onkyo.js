@@ -6,7 +6,7 @@ const Promise = require('bluebird');
 // module under test
 const {Onkyo, OnkyoError} = require('../lib');
 
-const {stub/* , spy */} = sinon;
+const {stub, spy} = sinon;
 
 
 describe('Onkyo', function () {
@@ -140,6 +140,15 @@ describe('Onkyo', function () {
           });
       });
     });
+    it('unrecognize', function (done) {
+      spy(onkyo, '_parseMsg');
+      onEvents.data(Onkyo.createEiscpBuffer('abc01\x1a'));
+      onkyo.once('error', () => {
+        expect(onkyo._parseMsg.calledOnce).to.be.eql(true);
+        onkyo._parseMsg.restore();
+        done();
+      });
+    });
   });
   it('sendCommand', function () {
     const onkyo = new Onkyo({address: 'localhost'});
@@ -260,6 +269,36 @@ describe('Onkyo', function () {
         return onkyo.setSoundMode(mode)
           .then((soundMode) => {
             expect(soundMode).to.be.eql(mode);
+          });
+      });
+    });
+    describe('setCenterVolume', function () {
+      it('throws when invalid input', function () {
+        expect(() => onkyo.setCenterVolume('')).to.throw(Error);
+        expect(() => onkyo.setCenterVolume(0.1)).to.throw(Error);
+        expect(() => onkyo.setCenterVolume(-13)).to.throw(Error);
+        expect(() => onkyo.setCenterVolume(13)).to.throw(Error);
+      });
+      it('pass', function () {
+        const vol = 6;
+        onkyo._sendISCPpacket.callsFake(() => {
+          onkyo._parseClientPacket(`CTL+${vol.toString(16)}`, pypass);
+        });
+        return onkyo.setCenterVolume(vol)
+          .then((volume) => {
+            expect(volume).to.be.eql(vol);
+          });
+      });
+    });
+    describe('getCenterVolume', function () {
+      it('pass', function () {
+        const vol = 10;
+        onkyo._sendISCPpacket.callsFake(() => {
+          onkyo._parseClientPacket(`CTL+${vol.toString(16)}`, pypass);
+        });
+        return onkyo.getCenterVolume()
+          .then((volume) => {
+            expect(volume).to.be.eql(vol);
           });
       });
     });

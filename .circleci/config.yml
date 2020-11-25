@@ -3,7 +3,7 @@ version: 2
 defaults: &defaults
   working_directory: ~/repo
   docker:
-    - image: circleci/node:6.11.4
+    - image: circleci/node:15.2.1
 
 jobs:
   test:
@@ -35,7 +35,7 @@ jobs:
             MOCHA_FILE: junit/test-results.xml
       - run:
           name: coveralls
-          command: cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
+          command: cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js || echo "forks are not allowed to push to coveralls"
       - run:
           name: lint
           command: npm run lint
