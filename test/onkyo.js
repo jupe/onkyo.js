@@ -186,7 +186,7 @@ describe('Onkyo', function () {
       it('pass', function () {
         const vol = 50;
         onkyo._sendISCPpacket.callsFake(() => {
-          onkyo.emit('MVL', vol.toString(16));
+          onkyo._parseClientPacket(`MVL${vol.toString(16)}`, pypass);
         });
         return onkyo.setVolume(vol)
           .then((volume) => {
@@ -201,6 +201,36 @@ describe('Onkyo', function () {
           onkyo._parseClientPacket(`MVL${vol.toString(16)}`, pypass);
         });
         return onkyo.getVolume()
+          .then((volume) => {
+            expect(volume).to.be.eql(vol);
+          });
+      });
+    });
+    describe('setCenterVolume', function () {
+      it('throws when invalid input', function () {
+        expect(() => onkyo.setCenterVolume('')).to.throw(Error);
+        expect(() => onkyo.setCenterVolume(0.1)).to.throw(Error);
+        expect(() => onkyo.setCenterVolume(-13)).to.throw(Error);
+        expect(() => onkyo.setCenterVolume(13)).to.throw(Error);
+      });
+      it('pass', function () {
+        const vol = 6;
+        onkyo._sendISCPpacket.callsFake(() => {
+          onkyo._parseClientPacket(`CTL+${vol.toString(16)}`, pypass);
+        });
+        return onkyo.setCenterVolume(vol)
+          .then((volume) => {
+            expect(volume).to.be.eql(vol);
+          });
+      });
+    });
+    describe('getCenterVolume', function () {
+      it('pass', function () {
+        const vol = 10;
+        onkyo._sendISCPpacket.callsFake(() => {
+          onkyo._parseClientPacket(`CTL+${vol.toString(16)}`, pypass);
+        });
+        return onkyo.getCenterVolume()
           .then((volume) => {
             expect(volume).to.be.eql(vol);
           });
