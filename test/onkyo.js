@@ -206,6 +206,36 @@ describe('Onkyo', function () {
           });
       });
     });
+    describe('setCenterVolume', function () {
+      it('throws when invalid input', function () {
+        expect(() => onkyo.setCenterVolume('')).to.throw(Error);
+        expect(() => onkyo.setCenterVolume(0.1)).to.throw(Error);
+        expect(() => onkyo.setCenterVolume(-13)).to.throw(Error);
+        expect(() => onkyo.setCenterVolume(13)).to.throw(Error);
+      });
+      it('pass', function () {
+        const vol = 6;
+        onkyo._sendISCPpacket.callsFake(() => {
+          onkyo._parseClientPacket(`CTL+${vol.toString(16)}`, pypass);
+        });
+        return onkyo.setCenterVolume(vol)
+          .then((volume) => {
+            expect(volume).to.be.eql(vol);
+          });
+      });
+    });
+    describe('getCenterVolume', function () {
+      it('pass', function () {
+        const vol = 10;
+        onkyo._sendISCPpacket.callsFake(() => {
+          onkyo._parseClientPacket(`CTL+${vol.toString(16)}`, pypass);
+        });
+        return onkyo.getCenterVolume()
+          .then((volume) => {
+            expect(volume).to.be.eql(vol);
+          });
+      });
+    });
     it('getDeviceState', function () {
       const callFakes = [
         () => onkyo._parseClientPacket('PWR01', pypass), // POWER on
