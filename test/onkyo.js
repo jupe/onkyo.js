@@ -186,7 +186,7 @@ describe('Onkyo', function () {
       it('pass', function () {
         const vol = 50;
         onkyo._sendISCPpacket.callsFake(() => {
-          onkyo.emit('MVL', vol.toString(16));
+          onkyo._parseClientPacket(`MVL${vol.toString(16)}`, pypass);
         });
         return onkyo.setVolume(vol)
           .then((volume) => {
