@@ -142,6 +142,10 @@ Basic API:
 // sound mode
 <Promise> onkyo.getSoundMode(<zone>)         // resolves current sound mode
 <Promise> onkyo.setSoundMode(<mode>, <zone>) // sound mode selection, resolves when ready
+
+// remote control keys
+<Promise> onkyo.sendRemoteKey(<key>)  // possible values: MENU, UP, DOWN, LEFT, RIGHT, ENTER, EXIT, VIDEO, AUDIO, HOME 
+
 ```
 \* `<zone>` is optional and by default control main zone, for other zones add `"zone2"`or `"zone3"`.
 
