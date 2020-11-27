@@ -115,15 +115,39 @@ Sending raw command:
 onkyo.sendRawCommand(<data>)
 ```
 
-Basic volume API's:
+Basic API:
 ```
-<Promise> onkyo.volUp()             // volume +1, resolves when ready
-<Promise> onkyo.volDown()           // volume -1, resolves when ready
-<Promise> onkyo.setVolume(<volume>) // volume between 0-100, resolves when ready
-<Promise> onkyo.getVolume()         // resolves current volume
-<Promise> onkyo.isOn()              // resolves true if powers on
-<Promise> onkyo.isOff()             // resolves false if powers off
+// power
+<Promise> onkyo.isOn(<zone>)              // resolves true if powers on
+<Promise> onkyo.isOff(<zone>)             // resolves true if powers off
+<Promise> onkyo.pwrToggle(<zone>)         // toggle power, resolves when ready
+<Promise> onkyo.pwrOn(<zone>)             // power on, resolves when ready
+<Promise> onkyo.pwrOff(<zone>)            // power off, resolves when ready
+
+// volume
+<Promise> onkyo.volUp(<zone>)             // volume +1, resolves when ready
+<Promise> onkyo.volDown(<zone>)           // volume -1, resolves when ready
+<Promise> onkyo.setVolume(<volume>, <zone>) // volume between 0-100, resolves when ready
+<Promise> onkyo.getVolume(<zone>)         // resolves current volume
+
+// mute
+<Promise> onkyo.mute(<zone>)              // mute, resolves when ready
+<Promise> onkyo.unMute(<zone>)            // unmute, resolves when ready
+<Promise> onkyo.getMute(<zone>)           // resolves true if mute is on
+
+// source/input
+<Promise> onkyo.getSource(<zone>)         // resolves current source/input
+<Promise> onkyo.setSource(<source>, <zone>) // source selection, resolves when ready
+
+// sound mode
+<Promise> onkyo.getSoundMode(<zone>)         // resolves current sound mode
+<Promise> onkyo.setSoundMode(<mode>, <zone>) // sound mode selection, resolves when ready
+
+// remote control keys
+<Promise> onkyo.sendRemoteKey(<key>)  // possible values: MENU, UP, DOWN, LEFT, RIGHT, ENTER, EXIT, VIDEO, AUDIO, HOME 
+
 ```
+\* `<zone>` is optional and by default control main zone, for other zones add `"zone2"`or `"zone3"`.
 
 Onkyo instance generates public API's based on [onkyo.commands.js](lib/onkyo.commands.js) -file and contains following Promise API's:
 
@@ -239,6 +263,8 @@ zone2AudioVolDown()
 zone2AudioVolUp1()
 zone2AudioVolDown1()
 zone2AudioVolQstn()
+zone2AudioStatusVol()
+zone2AudioStatusMute()
 zone2SourceSelectCblSat()
 zone2SourceSelectGame()
 zone2SourceSelectAux()
@@ -258,6 +284,7 @@ zone2SourceSelectHdmi5()
 zone2SourceSelectQstn()
 zone2SourceSelectUp()
 zone2SourceSelectDown()
+zone2SourceSelectStatus()
 zone2NetPlay()
 zone2NetStop()
 zone2NetPause()
@@ -290,6 +317,8 @@ zone3AudioVolDown()
 zone3AudioVolUp1()
 zone3AudioVolDown1()
 zone3AudioVolQstn()
+zone3AudioStatusVol()
+zone3AudioStatusMute()
 zone3SourceSelectCblSat()
 zone3SourceSelectGame()
 zone3SourceSelectAux()
@@ -309,6 +338,7 @@ zone3SourceSelectHdmi5()
 zone3SourceSelectQstn()
 zone3SourceSelectUp()
 zone3SourceSelectDown()
+zone3SourceSelectStatus()
 zone3NetPlay()
 zone3NetStop()
 zone3NetPause()

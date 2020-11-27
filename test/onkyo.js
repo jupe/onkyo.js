@@ -181,12 +181,15 @@ describe('Onkyo', function () {
         expect(() => onkyo.setVolume('')).to.throw(Error);
         expect(() => onkyo.setVolume(0.1)).to.throw(Error);
         expect(() => onkyo.setVolume(-1)).to.throw(Error);
-        expect(() => onkyo.setVolume(101)).to.throw(Error);
       });
       it('pass', function () {
         const vol = 50;
-        onkyo._sendISCPpacket.callsFake(() => {
-          onkyo._parseClientPacket(`MVL${vol.toString(16)}`, pypass);
+        const callFakes = [
+          () => onkyo._parseClientPacket('PWR01', pypass), // POWER on
+          () => onkyo.emit('MVL', vol.toString(16)) // VOL 1
+        ];
+        _.each(callFakes, (callFake, index) => {
+          onkyo._sendISCPpacket.onCall(index).callsFake(callFake);
         });
         return onkyo.setVolume(vol)
           .then((volume) => {
@@ -203,6 +206,69 @@ describe('Onkyo', function () {
         return onkyo.getVolume()
           .then((volume) => {
             expect(volume).to.be.eql(vol);
+          });
+      });
+    });
+    describe('getMute', function () {
+      it('pass', function () {
+        onkyo._sendISCPpacket.callsFake(() => {
+          onkyo._parseClientPacket('AMT01', pypass);
+        });
+        return onkyo.getMute()
+          .then((volume) => {
+            expect(volume).to.be.eql(true);
+          });
+      });
+    });
+    describe('getSource', function () {
+      it('pass', function () {
+        onkyo._sendISCPpacket.callsFake(() => {
+          onkyo._parseClientPacket('SLI2B', pypass);
+        });
+        return onkyo.getSource()
+          .then((volume) => {
+            expect(volume).to.be.eql('NET');
+          });
+      });
+    });
+    describe('setSource', function () {
+      it('pass', function () {
+        const src = 'NET'; // SOURCE NET
+        const callFakes = [
+          () => onkyo.emit('SLI', src)
+        ];
+        _.each(callFakes, (callFake, index) => {
+          onkyo._sendISCPpacket.onCall(index).callsFake(callFake);
+        });
+        return onkyo.setSource(src)
+          .then((source) => {
+            expect(source).to.be.eql(src);
+          });
+      });
+    });
+    describe('getSoundMode', function () {
+      it('pass', function () {
+        onkyo._sendISCPpacket.callsFake(() => {
+          onkyo._parseClientPacket('LMD02', pypass);
+        });
+        return onkyo.getSoundMode()
+          .then((volume) => {
+            expect(volume).to.be.eql('SURROUND');
+          });
+      });
+    });
+    describe('setSoundMode', function () {
+      it('pass', function () {
+        const mode = 'SURROUND';
+        const callFakes = [
+          () => onkyo.emit('LMD', mode)
+        ];
+        _.each(callFakes, (callFake, index) => {
+          onkyo._sendISCPpacket.onCall(index).callsFake(callFake);
+        });
+        return onkyo.setSoundMode(mode)
+          .then((soundMode) => {
+            expect(soundMode).to.be.eql(mode);
           });
       });
     });
