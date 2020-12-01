@@ -127,6 +127,16 @@ describe('Onkyo', function () {
         rx: '!1AMT00',
         event: 'AMT',
         payload: {AMT: false}
+      },
+      {
+        rx: '!1CEC00',
+        event: 'CEC',
+        payload: {CEC: 'off'}
+      },
+      {
+        rx: '!1NDN00',
+        event: 'NDN',
+        payload: {NDN: '00'}
       }
     ];
     _.each(tests, (obj) => {
