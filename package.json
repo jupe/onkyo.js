@@ -24,7 +24,7 @@
     "bluebird": "^3.7.2",
     "debug": "^3.2.7",
     "invariant": "^2.2.4",
-    "lodash": "^4.17.20",
+    "lodash": "^4.17.21",
     "snyk": "^1.436.0"
   },
   "devDependencies": {
