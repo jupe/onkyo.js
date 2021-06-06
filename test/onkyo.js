@@ -97,7 +97,7 @@ describe('Onkyo', function () {
     };
     return onkyo.connect(myConnect)
       .then(() => {
-        expect(socket.on.callCount).to.be.equal(3);
+        expect(socket.on.callCount).to.be.equal(4);
       });
   });
   describe('receive', function () {
