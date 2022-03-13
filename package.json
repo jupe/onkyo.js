@@ -43,7 +43,7 @@
     "istanbul": "^0.4.5",
     "mocha": "^5.2.0",
     "mocha-circleci-reporter": "0.0.3",
-    "sinon": "^6.3.5"
+    "sinon": "^13.0.1"
   },
   "bin": "./cli.js",
   "contributors": [
