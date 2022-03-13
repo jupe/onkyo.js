@@ -36,7 +36,7 @@
     "eslint-config-standard": "^11.0.0",
     "eslint-plugin-chai-expect": "^1.2.0",
     "eslint-plugin-import": "^2.18.0",
-    "eslint-plugin-mocha": "^4.10.1",
+    "eslint-plugin-mocha": "^10.0.3",
     "eslint-plugin-mocha-only": "0.0.3",
     "eslint-plugin-node": "^6.0.0",
     "eslint-plugin-promise": "^3.6.0",
