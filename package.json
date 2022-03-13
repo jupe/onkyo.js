@@ -39,7 +39,7 @@
     "eslint-plugin-mocha": "^4.10.1",
     "eslint-plugin-mocha-only": "0.0.3",
     "eslint-plugin-node": "^6.0.0",
-    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-promise": "^4.3.1",
     "istanbul": "^0.4.5",
     "mocha": "^5.2.0",
     "mocha-circleci-reporter": "0.0.3",
