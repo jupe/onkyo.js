@@ -196,7 +196,7 @@ describe('Onkyo', function () {
         const vol = 50;
         const callFakes = [
           () => onkyo._parseClientPacket('PWR01', pypass), // POWER on
-          () => onkyo.emit('MVL', vol.toString(16)) // VOL 1
+          () => onkyo._parseClientPacket(`MVL${vol.toString(16)}`, pypass) // VOL 1
         ];
         _.each(callFakes, (callFake, index) => {
           onkyo._sendISCPpacket.onCall(index).callsFake(callFake);
