@@ -20,7 +20,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "ansi-escapes": "^3.2.0",
+    "ansi-escapes": "^5.0.0",
     "bluebird": "^3.7.2",
     "debug": "^4.3.4",
     "invariant": "^2.2.4",
