@@ -22,7 +22,7 @@
   "dependencies": {
     "ansi-escapes": "^6.1.0",
     "bluebird": "^3.7.2",
-    "debug": "^4.3.4",
+    "debug": "^4.3.5",
     "invariant": "^2.2.4",
     "lodash": "^4.17.21",
     "snyk": "^1.1053.0"
